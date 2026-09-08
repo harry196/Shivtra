@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Verify OTP{% endblock title %}
+
+{% block body %}
+<div class="otp-overlay">
+    <div class="otp-modal">
+        <h4 class="mb-2">Verify OTP</h4>
+        <p class="text-muted mb-3">
+            Enter the OTP sent to you
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text"
+                   name="otp"
+                   maxlength="6"
+                   class="form-control otp-input mb-3"
+                   placeholder="● ● ● ● ● ●"
+                   required>
+
+            <button class="btn btn-success w-100">
+                Verify OTP
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock body %}

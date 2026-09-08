@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}My Bookings{% endblock title %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">My Booking History</h3>
+
+```
+{% if bookings %}
+    <div class="row g-4">
+        {% for booking in bookings %}
+            <div class="col-md-6">
+                <div class="booking-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5>
+                                {{ booking.from_place }} → {{ booking.to_place }}
+                            </h5>
+                            <p class="text-muted mb-1">
+                                {{ booking.travel_date }} • {{ booking.transport_mode|title }}
+                            </p>
+                            <p class="text-muted mb-0">
+                                Booked on {{ booking.booked_on|date:"d M Y" }}
+                            </p>
+                        </div>
+
+                        <div class="text-end">
+                            <span class="badge bg-success mb-2">
+                                {{ booking.status }}
+                            </span>
+                            <h5 class="text-primary">₹{{ booking.price }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-center text-muted mt-5">
+        You have not made any bookings yet.
+    </p>
+{% endif %}
+```
+
+</div>
+
+{% endblock body %}

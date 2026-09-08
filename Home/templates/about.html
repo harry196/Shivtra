@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+About Us - Shivtra
+{% endblock title %}
+
+{% block body %}
+
+<!-- Hero Section -->
+<section class="py-5 text-center bg-light border-bottom">
+  <div class="container">
+    <h1 class="fw-bold text-primary">About Shivtra</h1>
+    <p class="lead text-muted">Your trusted travel partner — making every journey comfortable, joyful, and memorable.</p>
+  </div>
+</section>
+
+<!-- About Company -->
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Image -->
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img src="{% static 'img/ghat.jpg.jpg' %}" class="img-fluid rounded-4 shadow-sm" alt="About Us">
+      </div>
+
+      <!-- Right Content -->
+      <div class="col-md-6">
+        <h2 class="fw-bold text-primary mb-3">Who We Are</h2>
+        <p class="text-muted">
+          Shivtra is one of India’s leading travel service providers, known for offering affordable, safe, and delightful travel experiences. 
+          We specialize in tour packages, hotel bookings, cab rentals, and holiday planning for families, groups, and corporate travelers.
+        </p>
+        <p class="text-muted">
+          Founded with the mission of making travel simple and accessible, we have helped thousands of travelers explore India’s most breathtaking destinations — from the serene ghats of Varanasi to the beaches of Goa and the mountains of Ladakh.
+        </p>
+        <a href="/contact" class="btn btn-primary mt-3">Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="fw-bold text-primary mb-4">Our Mission & Vision</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+          <i class="bi bi-compass-fill text-primary fs-1 mb-3"></i>
+          <h5 class="fw-bold">Our Mission</h5>
+          <p class="text-muted">
+            To deliver world-class travel experiences through personalized service, transparency, and dedication — ensuring every trip becomes a beautiful memory.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+          <i class="bi bi-eye-fill text-primary fs-1 mb-3"></i>
+          <h5 class="fw-bold">Our Vision</h5>
+          <p class="text-muted">
+            To become India’s most trusted travel company by connecting people with destinations through joy, comfort, and cultural experiences.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team / Founder -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold text-primary mb-4">Meet Our Founder</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 p-4">
+          <img src="{% static 'img/me2.jpg.jpeg' %}" class="rounded-circle mx-auto mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Founder">
+          <h5 class="fw-bold">Keshar Agre</h5>
+          <p class="text-muted small">Founder & CEO</p>
+          <p class="text-muted">
+            With a passion for travel and hospitality, Keshar founded Shivtra to make every traveler’s journey effortless and memorable.
+          </p>
+          <div>
+            <a href="#" class="text-primary me-2"><i class="bi bi-facebook fs-5"></i></a>
+            <a href="#" class="text-primary me-2"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="#" class="text-primary"><i class="bi bi-linkedin fs-5"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-5 bg-primary text-white text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-4">Why Travel With Us?</h2>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <i class="bi bi-star-fill fs-2 mb-2"></i>
+        <h6>Trusted by 10,000+ Travelers</h6>
+      </div>
+      <div class="col-md-3">
+        <i class="bi bi-wallet2 fs-2 mb-2"></i>
+        <h6>Affordable Packages</h6>
+      </div>
+      <div class="col-md-3">
+        <i class="bi bi-map-fill fs-2 mb-2"></i>
+        <h6>Pan India Service</h6>
+      </div>
+      <div class="col-md-3">
+        <i class="bi bi-headset fs-2 mb-2"></i>
+        <h6>24/7 Support</h6>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock body %}

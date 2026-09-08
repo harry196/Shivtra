@@ -1,0 +1,587 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login_page</title>
+    <style>
+
+          
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: #ffffff;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-trail {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 107, 53, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out;
+        }
+
+        /* Main Layout */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Left Side - Illustration */
+        .illustration-side {
+            flex: 1;
+            background: linear-gradient(135deg, #fef7f0 0%, #fff5eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blob-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            position: relative;
+        }
+
+        /* Animated Blobs */
+        .blob {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .blob:nth-child(1) { animation-delay: 0s; }
+        .blob:nth-child(2) { animation-delay: 0.5s; }
+        .blob:nth-child(3) { animation-delay: 1s; }
+        .blob:nth-child(4) { animation-delay: 1.5s; }
+        .blob:nth-child(5) { animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Eyes */
+        .eyes {
+            position: absolute;
+            display: flex;
+            gap: 8px;
+        }
+
+        .eye {
+            width: 12px;
+            height: 12px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        /* Orange Circle */
+        .orange-circle {
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            border-radius: 50%;
+        }
+
+        .orange-circle .eyes {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Purple Triangle */
+        .purple-triangle {
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 180px solid #7c3aed;
+        }
+
+        .purple-triangle .eyes {
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Yellow Drop */
+        .yellow-drop {
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .yellow-drop .eyes {
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .yellow-drop .eye {
+            width: 8px;
+            height: 8px;
+        }
+
+        /* Black Bottle */
+        .black-bottle {
+            width: 60px;
+            height: 140px;
+            background: #1a1a2e;
+            border-radius: 30px 30px 25px 25px;
+            position: relative;
+        }
+
+        .black-bottle::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 25px;
+            background: #1a1a2e;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .black-bottle .eyes {
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .black-bottle .eye {
+            background: #ffffff;
+        }
+
+        /* Blue Triangle */
+        .blue-triangle {
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 100px solid #3b82f6;
+        }
+
+        /* Right Side - Form */
+        .form-side {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: #ffffff;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Heading */
+        .form-heading {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-heading h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .form-heading p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 48px;
+            padding: 0 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        /* Password Field */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0;
+        }
+
+        .toggle-password:hover {
+            color: #1a1a2e;
+        }
+
+        /* Remember & Forgot */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #ff6b35;
+        }
+
+        .remember-me label {
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: #ff6b35;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            height: 48px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+            color: #ffffff;
+            border: none;
+            margin-bottom: 12px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 26, 46, 0.3);
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #1a1a2e;
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-google:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        .btn-google svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Sign Up Link */
+        .signup-link {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .signup-link a {
+            color: #1a1a2e;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .illustration-side {
+                min-height: 300px;
+                padding: 20px;
+            }
+
+            .blob-container {
+                transform: scale(0.7);
+            }
+
+            .form-side {
+                padding: 24px;
+            }
+
+            .custom-cursor,
+            .cursor-trail {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+    <div class="login-container">
+        <!-- Left Side - Animated Illustration -->
+        <div class="illustration-side">
+            <div class="blob-container">
+                <!-- Orange Circle -->
+                <div class="blob orange-circle">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                </div>
+
+                <!-- Purple Triangle -->
+                <div class="blob" style="position: relative;">
+                    <div class="purple-triangle"></div>
+                    <div class="eyes" style="position: absolute; top: 100px; left: 50%; transform: translateX(-50%);">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                </div>
+
+                <!-- Yellow Drop -->
+                <div class="blob yellow-drop">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                    </div>
+                </div>
+
+                <!-- Black Bottle -->
+                <div class="blob black-bottle">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                </div>
+
+                <!-- Blue Triangle -->
+                <div class="blob" style="position: relative;">
+                    <div class="blue-triangle"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="form-side">
+            <div class="form-container">
+                <!-- Logo -->
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L12 12M12 12L22 12M12 12L2 12M12 12L12 22"/>
+                    </svg>
+                </div>
+
+                <!-- Heading -->
+                <div class="form-heading">
+                    <h1>Welcome!</h1>
+                    <p>Please enter your details</p>
+                </div>
+
+                <!-- Form -->
+                <form method="post" action="{% url 'auth_modal_login' %}">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword()">
+                                <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember" checked>
+                            <label for="remember">Remember for 30 days</label>
+                        </div>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Log In</button>
+
+                    <button type="button" class="btn btn-google">
+                        <svg viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Log in with Google
+                    </button>
+                </form>
+
+                <p class="signup-link">
+                    Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const trail = document.getElementById('cursorTrail');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            setTimeout(() => {
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Cursor hover effect on interactive elements
+        document.querySelectorAll('button, input, a, label').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+            });
+        });
+
+        // Toggle Password
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+            }
+        }
+    </script>
+</body>
+</html>
+
+

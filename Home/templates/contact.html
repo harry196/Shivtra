@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us - Shivtra
+{% endblock title %}
+
+{% block body %}
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold text-primary">Contact Us</h1>
+    <p class="text-muted">We’d love to hear from you! Reach out for bookings, queries, or collaborations.</p>
+  </div>
+
+  <div class="row g-5">
+    <!-- Contact Form -->
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 h-100">
+        <h4 class="mb-1 fw-bold">Send Us a Message</h4>
+        <form>
+          <div class="mb-2">
+            <label for="name" class="form-label fw-semibold">Full Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+          </div>
+          <div class="mb-2">
+            <label for="email" class="form-label fw-semibold">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+          </div>
+          <div class="mb-2">
+            <label for="subject" class="form-label fw-semibold">Subject</label>
+            <input type="text" class="form-control" id="subject" placeholder="Your subject here">
+          </div>
+          <div class="mb-0">
+            <label for="message" class="form-label fw-semibold">Message</label>
+            <textarea class="form-control" id="message" rows="5" placeholder="Type your message here..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 fw-bold py-2">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="col-md-5">
+      <div class="card shadow-sm border-0 p-4 h-100 bg-light">
+        <h4 class="mb-4 fw-bold">Get in Touch</h4>
+        <p><i class="bi bi-geo-alt-fill text-primary me-2"></i> RTMNU, Nagpur, India</p>
+        <p><i class="bi bi-telephone-fill text-primary me-2"></i> +91951694051</p>
+        <p><i class="bi bi-envelope-fill text-primary me-2"></i> info@shivshaktitravel.com</p>
+        <hr>
+        <h5 class="fw-bold mt-4">Follow Us</h5>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" class="text-primary fs-4"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-info fs-4"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="text-danger fs-4"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-primary fs-4"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map Section -->
+  <div class="mt-5">
+    <h4 class="text-center fw-bold mb-4">Find Us on Map</h4>
+    <div class="ratio ratio-16x9">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3700.992745637967!2d79.0619387148462!3d21.12230998594626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c0f8f88b1b4f%3A0xddd391a42f3cc951!2sYeshwantrao%20Chavan%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1697287328123!5m2!1sen!2sin"
+        style="border:0;" allowfullscreen="" loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

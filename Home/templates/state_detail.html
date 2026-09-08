@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ state.name }} - Famous Places{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">{{ state.name }}</h1>
+        <p class="text-muted fs-5">{{ state.tagline }}</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        {% for place in state.places %}
+        <div class="col">
+            <div class="card shadow-sm border-0 h-100">
+                <img src="{% static place.image %}" class="card-img-top img-fixed" alt="{{ place.name }}">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ place.name }}</h5>
+                    <p class="card-text">{{ place.info }}</p>
+                    <p class="text-muted"><i class="bi bi-geo-alt-fill"></i> {{ place.location }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

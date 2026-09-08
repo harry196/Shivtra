@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Trip Results{% endblock title %}
+
+{% block body %}
+
+{% if trips %}
+    <div class="row g-4">
+        {% for trip in trips %}
+            <div class="col-md-6">
+                <div class="trip-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>{{ trip.from }} → {{ trip.to }}</h5>
+                            <p class="text-muted mb-1">
+                                {{ trip.date }} • {{ trip.mode|title }}
+                            </p>
+                            <p class="text-muted">
+                                Duration: {{ trip.duration }}
+                            </p>
+                        </div>
+
+                        <div class="text-end">
+                            <h4 class="text-primary">₹{{ trip.price }}</h4>
+                            <button class="btn btn-success btn-sm mt-2">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-center text-muted">No trips found.</p>
+{% endif %}
+
+{% endblock body %}

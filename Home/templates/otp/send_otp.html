@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block body %}
+<div class="auth-page">
+    <div class="auth-box">
+        <h3>Login with OTP</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text"
+                   name="identifier"
+                   class="form-control mb-3"
+                   placeholder="Enter email or mobile number"
+                   required>
+
+            <button class="btn btn-primary w-100">
+                Send OTP
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock body %}

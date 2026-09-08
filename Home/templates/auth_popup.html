@@ -1,0 +1,477 @@
+<!-- Auth Popup Overlay -->
+<div id="authOverlay" class="auth-overlay">
+    <div class="auth-popup">
+        <!-- Close Button -->
+        <button class="auth-close-btn" onclick="closeAuthPopup()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form active">
+            <div class="auth-logo">
+                <i class="bi bi-plus-lg"></i>
+            </div>
+            <h2>Welcome back!</h2>
+            <p class="auth-subtitle">Please enter your details</p>
+
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-input">
+                        <input type="password" name="password" id="loginPassword" placeholder="••••••••" required>
+                        <button type="button" onclick="togglePassword('loginPassword', this)">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Remember for 30 days</span>
+                    </label>
+                   
+                </div>
+                <button type="submit" class="auth-btn primary">Log In</button>
+                <button type="button" class="auth-btn google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                    Log in with Google
+                </button>
+            </form>
+            <p class="auth-switch">
+                Don't have an account? 
+                <button onclick="showSignup()">Sign Up</button>
+            </p>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signupForm" class="auth-form">
+            <div class="auth-logo">
+                <i class="bi bi-plus-lg"></i>
+            </div>
+            <h2>Create an account</h2>
+            <p class="auth-subtitle">Start your journey with Shivtra today</p>
+
+            <form method="POST" action="{% url 'auth_modal_signup' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-input">
+                        <input type="password" name="password1" id="signupPassword1" placeholder="••••••••" required>
+                        <button type="button" onclick="togglePassword('signupPassword1', this)">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="password-input">
+                        <input type="password" name="password2" id="signupPassword2" placeholder="••••••••" required>
+                        <button type="button" onclick="togglePassword('signupPassword2', this)">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <label class="terms-checkbox">
+                    <input type="checkbox" name="agree_terms" required>
+                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+                <button type="submit" class="auth-btn primary">Create Account</button>
+                <div class="divider"><span>or</span></div>
+                <button type="button" class="auth-btn google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                    Sign up with Google
+                </button>
+            </form>
+            <p class="auth-switch">
+                Already have an account? 
+                <button onclick="showLogin()">Log In</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Auth Popup Overlay */
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.auth-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Auth Popup Panel */
+.auth-popup {
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.auth-overlay.active .auth-popup {
+    transform: translateX(0);
+}
+
+/* Close Button */
+.auth-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    z-index: 10;
+}
+
+.auth-close-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* Auth Form Container */
+.auth-form {
+    display: none;
+    padding: 60px 40px;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-form.active {
+    display: flex;
+}
+
+/* Logo */
+.auth-logo {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Headings */
+.auth-form h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #333;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Password Input */
+.password-input {
+    position: relative;
+}
+
+.password-input input {
+    padding-right: 50px;
+}
+
+.password-input button {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    font-size: 18px;
+}
+
+.password-input button:hover {
+    color: #333;
+}
+
+/* Form Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    cursor: pointer;
+}
+
+.remember-me input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.form-options a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.form-options a:hover {
+    color: #333;
+}
+
+/* Terms Checkbox */
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 24px;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.terms-checkbox input {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.terms-checkbox a {
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.terms-checkbox a:hover {
+    text-decoration: underline;
+}
+
+/* Auth Buttons */
+.auth-btn {
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.auth-btn.primary {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    margin-bottom: 12px;
+}
+
+.auth-btn.primary:hover {
+    background: #333;
+}
+
+.auth-btn.google {
+    background: #ffffff;
+    color: #333;
+    border: 1px solid #e0e0e0;
+}
+
+.auth-btn.google:hover {
+    background: #f9f9f9;
+}
+
+.auth-btn.google img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.divider span {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Auth Switch */
+.auth-switch {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+}
+
+.auth-switch button {
+    background: none;
+    border: none;
+    color: #1a1a1a;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.auth-switch button:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .auth-popup {
+        max-width: 100%;
+    }
+    
+    .auth-form {
+        padding: 40px 24px;
+    }
+}
+</style>
+
+<script>
+// Toggle password visibility
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    const icon = button.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+
+// Show login form
+function showLogin() {
+    document.getElementById('loginForm').classList.add('active');
+    document.getElementById('signupForm').classList.remove('active');
+}
+
+// Show signup form
+function showSignup() {
+    document.getElementById('loginForm').classList.remove('active');
+    document.getElementById('signupForm').classList.add('active');
+}
+
+// Open auth popup
+function openAuthPopup() {
+    document.getElementById('authOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close auth popup
+function closeAuthPopup() {
+    document.getElementById('authOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('authOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAuthPopup();
+    }
+});
+
+// Auto-open popup when page loads (for non-authenticated users)
+window.addEventListener('load', function() {
+    {% if not user.is_authenticated %}
+        // Auto-open only on home page
+        if (window.location.pathname === '/') {
+            openAuthPopup();
+        }
+    {% endif %}
+});
+
+</script>
